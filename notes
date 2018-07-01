@@ -1,0 +1,6 @@
+App layout:
+header
+------------------------
+tab slots | tab macros TODO | tab save/load
+------------------------
+col slot+name| col dets
