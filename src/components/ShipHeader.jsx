@@ -5,7 +5,7 @@ import {observer} from 'mobx-react'
 export default class ShipHeader extends Component {
     render() {
         return (
-            <div className={this.props.store.hull === undefined ? "row nohull" : "row"}>
+            <div className={this.props.store.hull === undefined ? "row nohull" : "row"} onClick={()=>this.props.viewStore.chooseHull=true}>
                 <div className="col">
                     <input
                         style={{

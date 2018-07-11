@@ -3,20 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "3",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
+    "node-sass": "^4.9.2",
     "react": "^16.4.1",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.2",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "sass": "^1.9.0",
+    "sass-loader": "^7.0.3"
   },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-app-rewire-scss": "^1.0.2"
   }
 }
