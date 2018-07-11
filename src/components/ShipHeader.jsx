@@ -5,7 +5,10 @@ import {observer} from 'mobx-react'
 export default class ShipHeader extends Component {
     render() {
         return (
-            <div className={this.props.store.hull === undefined ? "row nohull" : "row"} onClick={()=>this.props.viewStore.chooseHull=true}>
+            <div
+                className={this.props.store.hull === undefined ? "row nohull" : "row"}
+                onClick={(e)=>{if(e.target !== this.nameBox) {this.props.viewStore.chooseHull=true}}}
+            >
                 <div className="col">
                     <input
                         style={{
@@ -18,6 +21,7 @@ export default class ShipHeader extends Component {
                         value={this.props.store.name}
                         onChange={(e)=>this.props.store.name = e.target.value}
                         placeholder={"The Unnamed"}
+                        ref={(elem)=>this.nameBox = elem}
                     />
                     <h1>{this.props.store.hullName}</h1>
 

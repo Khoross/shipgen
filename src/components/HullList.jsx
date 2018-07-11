@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import hullList from '~/static/hulls.json';
 import {observer} from 'mobx-react';
-import {Modal, Button, Panel, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Modal, Button, Panel, ListGroup, ListGroupItem, Glyphicon, Col, Row} from 'react-bootstrap';
 
 @observer
 export default class HullList extends Component {
@@ -37,7 +37,10 @@ export default class HullList extends Component {
     console.log(this.state);
     return (
 //<div className="modal-container">
-  <Modal show={this.props.viewStore.chooseHull} onHide={()=>this.props.viewStore.chooseHull = false} >
+  <Modal
+    show={this.props.viewStore.chooseHull}
+    onHide={()=>this.props.viewStore.chooseHull = false}
+    bsSize="large">
     <Modal.Header closeButton>
       <Modal.Title>Choose hull</Modal.Title>
     </Modal.Header>
@@ -49,24 +52,58 @@ export default class HullList extends Component {
           <Panel.Heading onClick={()=>this.toggleOpen(cls.class)}>
             <Panel.Title>
               {cls.class}
+              <Glyphicon glyph={this.state.open[cls.class] ? 'chevron-down' : 'chevron-right'} className="pull-right"/>
             </Panel.Title>
           </Panel.Heading>
           <Panel.Collapse>
-            <Panel.Body>
+            
 
-              <ListGroup>
+              <ListGroup bsClass='list-group-flush'>
               {
                 cls.hulls.map(hull => {
                   return(
-                    <ListGroupItem onClick={()=>this.setState({selected: hull})} key={hull.name}>
-                      {hull.name}
+                    <ListGroupItem
+                      onClick={()=>this.setState({selected: hull})}
+                      key={hull.name}
+                      active={this.state.selected === hull}>
+                        <Col xs={3} ><Row><h1>{hull.name}</h1></Row></Col>
+                        <Col xs={9} >
+                          <Row>
+                            <div className="d-flex flex-row p-2 justify-content-between">
+                              <div>
+                                <span>Speed: </span>
+                                <span>{hull.speed}</span>
+                              </div>
+                              <div>
+                                <span>Manoeuvrability: </span>
+                                <span>{hull.man}</span>
+                              </div>
+                              <div>
+                                <span>Detection: </span>
+                                <span>{}</span>
+                              </div>
+                              <div>
+                                <span></span>
+                                <span>{}</span>
+                              </div>
+                              <div>
+                                <span></span>
+                                <span>{}</span>
+                              </div>
+                            </div>
+                          </Row>
+                          <Row>
+                            
+                          </Row>
+                          <Row>{hull.misc !== "-" ? hull.misc : ''}</Row>
+                        </Col>
                     </ListGroupItem>
                     )
                 })
               }
               </ListGroup>
 
-            </Panel.Body>
+            
           </Panel.Collapse>
         </Panel>
       )

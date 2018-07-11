@@ -16,11 +16,9 @@ window.store2 = View
 class App extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid">
+        <HullList shipStore={Ship} viewStore={View}/>
         <ShipHeader store={Ship} viewStore={View}/>
-        <div className="row">
-          <HullList shipStore={Ship} viewStore={View}/>
-        </div>
       </div>
     );
   }
