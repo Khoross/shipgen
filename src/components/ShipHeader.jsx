@@ -27,8 +27,7 @@ export default class ShipHeader extends Component {
 
                 </div>
                 <div className="col">
-                    <span className="text-left">LEFT</span><span className="text-center">  CENTER  </span>
-                    <span className="text-right">RIGHT</span>
+                    <span>{this.props.store.pointsUsed}</span>
                 </div>
             </div>
         );
