@@ -8,42 +8,142 @@ function undefAdd(accessor = d=>d, ...objs){
         , 0)
 }
 
-class ShipDetails {
-
-}
+/**
+ * structure of a quality vector:
+ * 
+ */
 
 export class ShipStore {
     @observable name = undefined;
-    @observable.ref hull = undefined;
-    @observable.shallow components =
-        {
-            augur: undefined,
-            bridge: undefined,
-            crew: undefined,
-            gellar: undefined,
-            life: undefined,
-            plasma: undefined,
-            shields: undefined,
-            warp: undefined
-        };
-    @observable.shallow extras = [undefined];
+    @observable hullClass = undefined;
+    @observable hullIdx = undefined;
 
-    weapons = observable(
-        {
-            prow: [],
-            dorsal: [],
-            keel: [],
-            port: [],
-            starboard: []
-        },
-        {
-            prow: observable.shallow,
-            dorsal: observable.shallow,
-            keel: observable.shallow,
-            port: observable.shallow,
-            starboard: observable.shallow
+    @observable augurInternal = {idx: undefined, quality: undefined};
+    @observable bridgeInternal = {idx: undefined, quality: undefined};
+    @observable crewInternal = {idx: undefined, quality: undefined};
+    @observable gellarInternal = {idx: undefined, quality: undefined};
+    @observable lifeInternal = {idx: undefined, quality: undefined};
+    @observable plasmaInternal = {idx: undefined, quality: undefined};
+    @observable shieldsInternal = {idx: undefined, quality: undefined};
+    @observable warpInternal = {idx: undefined, quality: undefined};
+
+    @observable extrasInternal = [{idx: undefined, quality: undefined}];
+
+    @observable prowInternal = [];
+    @observable dorsalInternal = [];
+    @observable keelInternal = [];
+    @observable portInternal = [];
+    @observable starboardInternal = [];
+
+    /**
+     * Generate a new component with quality modifiers applied
+     * @param  {object} component Original component
+     * @param  {object} quality   quality object - should have a cost and a number of other keys
+     * @return {object}           New component with stats updated
+     */
+    applyQuality(component, quality) {
+        let qualCopy = Object.assign({}, quality);
+        if("powergen" in qualCopy) {
+            if(component.power > 0) {
+                qualCopy.power = qualCopy.power + qualCopy.powergen
+            }
+            delete qualCopy.powergen
         }
-    )
+        let compCopy = Object.assign({}, component);
+        for key in qualCopy:
+            //can't bring things below 1
+            //can't bring power above -1
+            //if property is 0, and not power, can make positive but not negative
+            //for simplicity, will switch power to have negative is good (as with everything else)
+            compCopy[key] += qualCopy[key];
+            if(compCopy[key] > 0) {
+                compCopy[key] = Math.max(1, compCopy[key] + qualCopy[key])
+            } else if(key === power && comCopy[key] < 0) {
+                compCopy[key] = Math.min(-1, compCopy[key] + qualCopy[key])
+            } else {
+
+            }
+    }
+
+    @computed get hull() {
+        return hullList[this.hullClass][this.hullIdx];
+    }
+    @computed get augur() {
+        if(this.augurInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, augurList[this.augurInternal.idx])
+        return this.augurInternal === undefined ? undefined : augurList[this.augurInternal];
+    }
+    @computed get bridge() {
+        if(this.bridgeInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, bridgeList[this.bridgeInternal.idx])
+        return this.bridgeInternal === undefined ? undefined : bridgeList[this.bridgeInternal];
+    }
+    @computed get crew() {
+        if(this.crewInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, crewList[this.crewInternal.idx])
+        return this.crewInternal === undefined ? undefined : crewList[this.crewInternal];
+    }
+    @computed get gellar() {
+        if(this.gellarInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, gellarList[this.gellarInternal.idx])
+        return this.gellarInternal === undefined ? undefined : gellarList[this.gellarInternal];
+    }
+    @computed get life() {
+        if(this.lifeInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, lifeList[this.lifeInternal.idx])
+        return this.lifeInternal === undefined ? undefined : lifeList[this.lifeInternal];
+    }
+    @computed get plasma() {
+        if(this.plasmaInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, plasmaList[this.plasmaInternal.idx])
+        return this.plasmaInternal === undefined ? undefined : plasmaList[this.plasmaInternal];
+    }
+    @computed get shields() {
+        if(this.shieldsInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, shieldsList[this.shieldsInternal.idx])
+        return this.shieldsInternal === undefined ? undefined : shieldsList[this.shieldsInternal];
+    }
+    @computed get warp() {
+        if(this.warpInternal === undefined) {
+            return undefined
+        }
+        return Object.assign({}, warpList[this.warpInternal.idx])
+        return this.warpInternal === undefined ? undefined : warpList[this.warpInternal];
+    }
+    @computed get extras() {
+        return this.extrasInternal.map(e=>e === undefined ? undefined : extrasList[e]);
+    }
+    @computed get prow() {
+        return this.prowInternal.map(e=>e === undefined ? undefined : weaponsList[e]);
+    }
+    @computed get dorsal() {
+        return this.dorsalInternal.map(e=>e === undefined ? undefined : weaponsList[e]);
+    }
+    @computed get keel() {
+        return this.keelInternal.map(e=>e === undefined ? undefined : weaponsList[e]);
+    }
+    @computed get port() {
+        return this.portInternal.map(e=>e === undefined ? undefined : weaponsList[e]);
+    }
+    @computed get starboard() {
+        return this.starboardInternal.map(e=>e === undefined ? undefined : weaponsList[e]);
+    }
+
+
 
     generateComponentList() {
         return [
@@ -56,7 +156,7 @@ export class ShipStore {
 
     @computed get hullName() {
         return this.hull !== undefined ?
-            `${this.hull.name} class ${this.hull.class}` :
+            `${this.hull.name} class ${this.hullClass}` :
             'No hull selected'
     }
 
@@ -78,23 +178,24 @@ export class ShipStore {
             ...this.generateComponentList())
     }
 
-    @action changeHull = (newHull) => {
-        if(newHull !== this.hull) {
-            this.hull = newHull;
-            this.components.augur = undefined;
-            this.components.bridge = undefined;
-            this.components.crew = undefined;
-            this.components.gellar = undefined;
-            this.components.life = undefined;
-            this.components.plasma = undefined;
-            this.components.shields = undefined;
-            this.components.warp = undefined;
-            this.extras = [undefined];
-            this.weapons.prow = Array(this.hull.prow);
-            this.weapons.dorsal = Array(this.hull.dorsal);
-            this.weapons.keel = Array(this.hull.keel);
-            this.weapons.port = Array(this.hull.port);
-            this.weapons.starboard = Array(this.hull.starboard);
+    @action changeHull = (newHullClass, newHullIdx) => {
+        if(newHullClass !== this.hullClass || newHullIdx !== this.hullIdx) {
+            this.hullClass = newHullClass;
+            this.hullIdx = newHullIdx;
+            this.augurIdx = undefined;
+            this.bridgeIdx = undefined;
+            this.crewIdx = undefined;
+            this.gellarIdx = undefined;
+            this.lifeIdx = undefined;
+            this.plasmaIdx = undefined;
+            this.shieldsIdx = undefined;
+            this.warpIdx = undefined;
+            this.extrasIdx = [undefined];
+            this.prowIdx = Array(hullList[newhullClass][newhullIdx].prow);
+            this.dorsalIdx = Array(hullList[newhullClass][newhullIdx].dorsal);
+            this.keelIdx = Array(hullList[newhullClass][newhullIdx].keel);
+            this.portIdx = Array(hullList[newhullClass][newhullIdx].port);
+            this.starboardIdx = Array(hullList[newhullClass][newhullIdx].starboard);
         }
     }
 }

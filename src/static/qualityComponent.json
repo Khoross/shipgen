@@ -1,0 +1,14 @@
+[
+    {"name": "Poor", "fixed": {"space": 1, "power": -1, "powergen": 1, "cost": -1}},
+    {"name": "Common", "fixed": {}},
+    {
+        "name": "Good",
+        "fixed": {"cost": 1},
+        "bonusOptions": [
+            {"name": "Space", "mod": {"space": -1}},
+            {"name": "Power", "mod": {"power": 1}}
+        ],
+        "choices": 1
+    },
+    {"name": "Best", "fixed": {"space": -1, "power": 1, "cost": 2}}
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Poor",
+        "fixed": {"cost": -1},
+        "bonusOptions": [
+            {"name": "Strength", "mod": {"strength": -1}},
+            {"name": "Damage", "mod": {"damage": -1}},
+            {"name": "Crit", "mod": {"crit": -1}},
+            {"name": "Range", "mod": {"range": -1}},
+            {"name": "Space", "mod": {"space": 1}},
+        ],
+        "choices": 2
+    },
+    {"name": "Common", "fixed": {}},
+    {
+        "name": "Good",
+        "fixed": {"cost": 1},
+        "bonusOptions": [
+            {"name": "Damage", "mod": {"damage": 1}},
+            {"name": "Range", "mod": {"range": 1}},
+            {"name": "Space", "mod": {"space": -1}},
+        ],
+        "choices": 1
+    },
+    {
+        "name": "Best",
+        "fixed": {"cost": 2},
+        "bonusOptions": [
+            {"name": "Strength", "mod": {"strength": 1}},
+            {"name": "Damage", "mod": {"damage": 1}},
+            {"name": "Crit", "mod": {"crit": 1}},
+            {"name": "Range", "mod": {"range": 1}},
+            {"name": "Space", "mod": {"space": -1}},
+        ],
+        "choices": 2
+    }
+]
