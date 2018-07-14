@@ -6,7 +6,7 @@ import {Modal, Button, Panel, ListGroup, ListGroupItem, Glyphicon, Col, Row} fro
 
 @observer
 export default class HullList extends Component {
-  @observable.ref selected = undefined;
+  @observable selected = {hullIdx: undefined, hullClassIdx: undefined};
   @observable open = {};
 
   constructor(props) {
@@ -16,13 +16,13 @@ export default class HullList extends Component {
   }
 
   updateHull() {
-    this.props.shipStore.changeHull(this.selected);
+    this.props.shipStore.changeHull(this.selected.hullClassIdx, this.selected.hullIdx);
     this.props.viewStore.chooseHull = false;
     this.resetState(this.props.shipStore)
   }
 
   @action resetState(store) {
-    this.selected = store.hull,
+    this.selected = {hullIdx: store.hullIdx, hullClassIdx: store.hullClassIdx};
     this.open = hullList.reduce((acc, cur) => {
         acc[cur.class] = store.hull !== undefined && (cur.class === store.hull.class)
         return acc
@@ -43,7 +43,7 @@ export default class HullList extends Component {
         </Modal.Header>
         <Modal.Body>
         {
-          hullList.map(cls => {
+          hullList.map((cls, clsIdx) => {
             return(
             <Panel expanded={this.open[cls.class]} key={cls.class} onToggle>
               <Panel.Heading onClick={()=>{this.open[cls.class] = !this.open[cls.class]}}>
@@ -57,12 +57,12 @@ export default class HullList extends Component {
 
                   <ListGroup bsClass='list-group-flush'>
                   {
-                    cls.hulls.map(hull => {
+                    cls.hulls.map((hull, hullIdx) => {
                       return(
                         <ListGroupItem
-                          onClick={()=>this.selected = hull}
+                          onClick={()=>this.selected = {hullIdx: hullIdx, hullClassIdx: clsIdx}}
                           key={hull.name}
-                          active={this.selected === hull}>
+                          active={this.selected.hullIdx === hullIdx && this.selected.hullClassIdx === clsIdx}>
                             <Col xs={3} ><Row><h1>{hull.name}</h1></Row></Col>
                             <Col xs={9} >
                               <Row>
