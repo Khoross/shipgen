@@ -7,7 +7,7 @@ import EssentialModal from './Essential/EssentialModal'
 
 @inject('shipStore')
 @observer
-export default class ShipHeader extends Component {
+export default class ComponentView extends Component {
   @observable showModal = false;
   @observable modalComp = undefined;
 
@@ -35,7 +35,7 @@ export default class ShipHeader extends Component {
                 </Grid>
               </ListGroupItem>
               {['plasma', 'shields', 'bridge', 'crew', 'life', 'augur', 'gellar', 'warp'].map(
-                comp => <EssentialRow comp={comp} key={comp} onClick={()=>this.displayModal(comp)} />)}
+                comp => <EssentialRow accessor={e=>e[comp]} key={comp} onClick={()=>this.displayModal(comp)} />)}
             </ListGroup>
           </Row>
         </Grid>

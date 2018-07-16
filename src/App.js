@@ -9,30 +9,32 @@ import {Provider} from 'mobx-react';
 import {create as createJss} from 'jss'
 import {JssProvider} from 'react-jss'
 import jssNested from 'jss-nested';
-import firebase from 'firebase';
-import 'firebase/firestore';
-import {initFirestorter, Collection, Document} from 'firestorter';
-import {Button} from 'react-bootstrap';
+import jssCamel from 'jss-camel-case';
+import jssVendor from 'jss-vendor-prefixer';
+// import firebase from 'firebase';
+// import 'firebase/firestore';
+// import {initFirestorter, Collection, Document} from 'firestorter';
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyDAqEMurbKpQT8Bz7mZuVmncWiG-0G4-o4',
-  authDomain: 'rtshipdesigner.firebaseapp.com',
-  projectId: 'rtshipdesigner'
-});
+// firebase.initializeApp({
+//   apiKey: 'AIzaSyDAqEMurbKpQT8Bz7mZuVmncWiG-0G4-o4',
+//   authDomain: 'rtshipdesigner.firebaseapp.com',
+//   projectId: 'rtshipdesigner'
+// });
 
-initFirestorter({firebase: firebase});
+// initFirestorter({firebase: firebase});
 
-async function save(store) {
-  const designs = new Collection('shipdesigns');
-  console.log(store.serialize)
-  const doc = await designs.add(
-    store.serialize
-  )
-}
+// async function save(store) {
+//   const designs = new Collection('shipdesigns');
+//   const doc = await designs.add(
+//     store.serialize
+//   )
+// }
 
 
 const jss = createJss()
 jss.use(jssNested())
+jss.use(jssCamel())
+jss.use(jssVendor())
 
 const Ship = new ShipStore();
 window.store = Ship;
@@ -46,7 +48,6 @@ class App extends Component {
             <React.Fragment>
               <ShipHeader/>
               <ComponentView />
-              <Button onClick={()=>save(Ship)} > TEST </Button>
             </React.Fragment>
           </Provider>
         </JssProvider>
