@@ -4,15 +4,19 @@
   "private": true,
   "dependencies": {
     "bootstrap": "3",
+    "classnames": "^2.2.6",
+    "firestorter": "^0.14.2",
+    "jss": "^9.8.7",
+    "jss-nested": "^6.0.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-extended": "^0.0.7",
     "react-dom": "^16.4.1",
+    "react-jss": "^8.6.1",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4"
-    
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -21,11 +25,12 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "react-app-rewired": "^1.5.2",
-    "react-app-rewire-mobx": "^1.0.8",
-    "react-app-rewire-build-dev": "^1.0.1",
-    "react-app-rewire-scss": "^1.0.2",
+    "firebase": "^5.2.0",
     "node-sass": "^4.9.2",
+    "react-app-rewire-build-dev": "^1.0.1",
+    "react-app-rewire-mobx": "^1.0.8",
+    "react-app-rewire-scss": "^1.0.2",
+    "react-app-rewired": "^1.5.2",
     "redux": "^4.0.0",
     "sass": "^1.9.0",
     "sass-loader": "^7.0.3"

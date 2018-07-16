@@ -3,22 +3,53 @@ import logo from '~/logo.svg';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import {ShipStore} from '~/model/ShipStore';
-import {ViewStore} from '~/model/ViewStore';
-import {observer} from 'mobx-react';
 import ShipHeader from '~/components/ShipHeader';
-import HullList from '~/components/HullList';
+import ComponentView from '~/components/ComponentView';
+import {Provider} from 'mobx-react';
+import {create as createJss} from 'jss'
+import {JssProvider} from 'react-jss'
+import jssNested from 'jss-nested';
+import firebase from 'firebase';
+import 'firebase/firestore';
+import {initFirestorter, Collection, Document} from 'firestorter';
+import {Button} from 'react-bootstrap';
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyDAqEMurbKpQT8Bz7mZuVmncWiG-0G4-o4',
+  authDomain: 'rtshipdesigner.firebaseapp.com',
+  projectId: 'rtshipdesigner'
+});
+
+initFirestorter({firebase: firebase});
+
+async function save(store) {
+  const designs = new Collection('shipdesigns');
+  console.log(store.serialize)
+  const doc = await designs.add(
+    store.serialize
+  )
+}
+
+
+const jss = createJss()
+jss.use(jssNested())
 
 const Ship = new ShipStore();
-const View = new ViewStore();
 window.store = Ship;
-window.store2 = View
 
 class App extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <HullList shipStore={Ship} viewStore={View}/>
-        <ShipHeader store={Ship} viewStore={View}/>
+        <JssProvider jss={jss}>
+          <Provider shipStore={Ship}>
+            <React.Fragment>
+              <ShipHeader/>
+              <ComponentView />
+              <Button onClick={()=>save(Ship)} > TEST </Button>
+            </React.Fragment>
+          </Provider>
+        </JssProvider>
       </div>
     );
   }
