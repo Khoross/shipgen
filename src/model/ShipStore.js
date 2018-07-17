@@ -370,9 +370,8 @@ export class ShipStore {
     }
 
     @action changeExtras = (newExtraIdx, newExtraQuality, idx) => {
-        console.log(this.extras[idx])
         if(newExtraIdx === undefined && this.extras[idx] !== undefined) {
-            this.extrasInternal.remove(this.extras[idx])
+            this.extrasInternal.remove(this.extrasInternal[idx])
         } else if(this.extras[idx] !== undefined) {
             this.extrasInternal[idx] = {idx: newExtraIdx, quality: newExtraQuality}
         } else {

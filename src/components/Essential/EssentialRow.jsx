@@ -22,7 +22,7 @@ export default class EssentialRow extends Component {
         onClick={this.props.onClick}
         >
         <Grid>
-          {item.name === undefined ?
+          {item === undefined ?
             <Row>
               <Col xs={3}>
                 <div className={classes.emptyComp}>{"No Component Selected"}</div>
