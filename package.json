@@ -12,6 +12,7 @@
     "jss-vendor-prefixer": "^8.0.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
+    "mobx-utils": "^5.0.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-extended": "^0.0.7",

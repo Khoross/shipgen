@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import logo from '~/logo.svg';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
-import {ShipStore} from '~/model/ShipStore';
-import ShipHeader from '~/components/ShipHeader';
-import ComponentView from '~/components/ComponentView';
 import {Provider} from 'mobx-react';
 import {create as createJss} from 'jss'
 import {JssProvider} from 'react-jss'
@@ -14,6 +11,10 @@ import jssVendor from 'jss-vendor-prefixer';
 // import firebase from 'firebase';
 // import 'firebase/firestore';
 // import {initFirestorter, Collection, Document} from 'firestorter';
+import {ShipStore} from '~/model/ShipStore';
+import ShipHeader from '~/components/ShipHeader';
+import ComponentView from '~/components/ComponentView';
+import ExtrasView from '~/components/ExtrasView';
 
 // firebase.initializeApp({
 //   apiKey: 'AIzaSyDAqEMurbKpQT8Bz7mZuVmncWiG-0G4-o4',
@@ -48,6 +49,7 @@ class App extends Component {
             <React.Fragment>
               <ShipHeader/>
               <ComponentView />
+              <ExtrasView />
             </React.Fragment>
           </Provider>
         </JssProvider>

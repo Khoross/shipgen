@@ -3,7 +3,7 @@ import {observer, inject, Provider} from 'mobx-react';
 import {observable, action} from 'mobx';
 import {Grid, ListGroup, ListGroupItem, Row, Panel} from 'react-bootstrap';
 import EssentialRow from './Essential/EssentialRow'
-import EssentialModal from './Essential/EssentialModal'
+import ExtrasModal from './Essential/ExtrasModal'
 
 @inject('shipStore')
 @observer
@@ -12,14 +12,13 @@ export default class ComponentView extends Component {
   @observable modalComp = undefined;
   @observable show = true;
 
-  @action displayModal = (comp) => {
+  @action displayModal = (idx) => {
     this.showModal = true;
-    this.modalComp = comp;
+    this.modalIdx = idx;
   }
 
   @action clearModal = () => {
     this.showModal = false;
-    this.modalComp = undefined;
   }
 
   render() {
@@ -29,24 +28,24 @@ export default class ComponentView extends Component {
         <Grid fluid={true}>
           <Row>
             <Panel bsStyle="info" expanded={this.show} onToggle>
-              <Panel.Heading onClick={()=>this.show = !this.show}>
+              <Panel.Heading onClick={()=> this.show = !this.show}>
                 <Panel.Title>
                   <Grid>
-                    <Row>Essential Components</Row>
+                    <Row>Supplementary Components</Row>
                   </Grid>
                 </Panel.Title>
               </Panel.Heading>
               <Panel.Collapse>
                 <ListGroup bsClass='list-group-flush'>
-                  {['plasma', 'shields', 'bridge', 'crew', 'life', 'augur', 'gellar', 'warp'].map(
-                    comp => <EssentialRow accessor={e=>e[comp]} comp={comp} key={comp} onClick={()=>this.displayModal(comp)} />)}
+                  {this.props.shipStore.extras.map((_,idx)=>
+                    <EssentialRow accessor={e=>e.extras[idx]} key={this.props.shipStore.getKeyList('extrasInternal')[idx]} onClick={()=>this.displayModal(idx)} />)}
                 </ListGroup>
               </Panel.Collapse>
             </Panel>
           </Row>
         </Grid>
       </Row>
-      <EssentialModal show={this.showModal} comp={this.modalComp} hide={this.clearModal} />
+      <ExtrasModal show={this.showModal} idx={this.modalIdx} hide={this.clearModal} />
       </React.Fragment>
       );
   }

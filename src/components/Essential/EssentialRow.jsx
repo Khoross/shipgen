@@ -5,7 +5,8 @@ import injectSheet from 'react-jss';
 
 const styles = {
   title: {
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    textAlign: "right"
   }
 }
 
@@ -23,21 +24,17 @@ export default class EssentialRow extends Component {
         <Grid>
           {item.name === undefined ?
             <Row>
-              <Col xs={5}>
-                <Row className={classes.empty}>
-                  <div className={classes.emptyComp}>{"No Component Selected"}</div>
-                  <div className={classes.title}>{this.props.comp}</div>
-                </Row>
+              <Col xs={3}>
+                <div className={classes.emptyComp}>{"No Component Selected"}</div>
+                <div className={classes.title}>{this.props.comp}</div>
               </Col>
             </Row> :
             <Row>
-              <Col xs={5}>
-                <Row>
-                  <div className={classes.comp}>{item.name}</div>
-                  <div className={classes.title}>{this.props.comp}</div>
-                </Row>
+              <Col xs={3}>
+                <div className={classes.comp}>{item.name}</div>
+                <div className={classes.title}>{this.props.comp}</div>
               </Col>
-              <Col xs={7} >
+              <Col xs={9} >
                 <Row>
                   <Col xs={4}>
                     <span className={classes.compItem}>Power: </span>
@@ -51,11 +48,7 @@ export default class EssentialRow extends Component {
                     <span className={classes.compItemVal}>{item.cost}</span>
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    {item.misc !== "-" ? item.misc : ''}
-                  </Col>
-                </Row>
+                {item.misc !== "-" ? item.misc : ''}
               </Col>
             </Row>
           }
