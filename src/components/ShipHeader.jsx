@@ -5,12 +5,19 @@ import {observable, action} from 'mobx';
 import HullList from './HullList';
 import injectSheet from 'react-jss';
 import classNames from 'classnames';
+import {Row, Col} from 'react-bootstrap';
 
 const styles = {
   header: {
     position: 'sticky',
   },
   nohull: {
+  },
+  nameInput: {
+    border: 'none',
+    outline: 'none',
+    boxShadow: 'none',
+    fontSize: '36px'
   }
 }
 
@@ -48,17 +55,18 @@ const hullViewStore = new HullViewStore();
 @observer
 export default class ShipHeader extends Component {
   render() {
+    const store = this.props.shipStore
     return (
       <React.Fragment>
         <div
           className={classNames({
             row: true,
             [this.props.classes.header]: true,
-            [this.props.classes.nohull]: this.props.shipStore.hull === undefined,
+            [this.props.classes.nohull]: store.hull === undefined,
           })}
           onClick={(e)=>{
             if(e.target !== this.nameBox) {
-              hullViewStore.resetState(this.props.shipStore.hullIdx, this.props.shipStore.hullClassIdx)
+              hullViewStore.resetState(store.hullIdx, store.hullClassIdx)
               hullViewStore.setVisible(true)
             }
           }}
@@ -66,23 +74,38 @@ export default class ShipHeader extends Component {
           <div className="container">
             <div className="col">
               <input
-                style={{
-                  border: 'none',
-                  outline: 'none',
-                  boxShadow: 'none',
-                  fontSize: "36px"
-                }}
-                className="form-control"
-                value={this.props.shipStore.name}
-                onChange={(e)=>this.props.shipStore.name = e.target.value}
+                className={classNames("form-control", this.props.classes.nameInput)}
+                value={store.name}
+                onChange={(e)=>store.name = e.target.value}
                 placeholder={"The Unnamed"}
                 ref={(elem)=>this.nameBox = elem}
               />
-              <h1>{this.props.shipStore.hullName}</h1>
+              <h1>{store.hullName}</h1>
             </div>
+            {
+            store.hull !== undefined &&
             <div className="col">
-              <span>{this.props.shipStore.pointsUsed}</span>
+              <Row>
+                <Col xs={4}><Row>Speed: <b>{store.hull.speed}</b></Row></Col>
+                <Col xs={4}><Row>Manoeuvrability: <b>{store.hull.man}</b></Row></Col>
+                <Col xs={4}><Row>Detection: <b>{store.hull.detection}</b></Row></Col>
+              </Row>
+              <Row>
+                <Col xs={4}><Row>Hull Points: <b>{store.hull.hits}</b></Row></Col>
+                <Col xs={4}><Row>Armour: <b>{store.hull.armour}</b></Row></Col>
+                <Col xs={4}><Row>Turret Rating: <b>{store.hull.turret}</b></Row></Col>
+              </Row>
+              <Row>
+                <Col xs={4}><Row>Space: <b>{`${store.spaceUsed}/${store.hull.space}`}</b></Row></Col>
+                <Col xs={4}><Row>Power: <b>{`${store.powerUsed}/${store.powerGenerated}`}</b></Row></Col>
+                <Col xs={4}><Row>Total Cost: <b>{`${store.pointsUsed}`}</b></Row></Col>
+              </Row>
+              <Row>
+                <Col xs={8}><Row>Xenotech Components: <b>{store.hull.xenosCount}</b></Row></Col>
+                <Col xs={4}><Row>Archaeotech Components: <b>{store.hull.archaeoCount}</b></Row></Col>
+              </Row>
             </div>
+            }
           </div>
         </div>
         <Provider hullViewStore={hullViewStore}>
