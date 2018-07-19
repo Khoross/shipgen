@@ -25,8 +25,6 @@ export default class ComponentView extends Component {
   render() {
     return (
       <React.Fragment>
-      <Row>
-        <Grid fluid={true}>
           <Row>
             <Panel bsStyle="info" expanded={this.show} onToggle>
               <Panel.Heading onClick={()=>this.show = !this.show}>
@@ -44,8 +42,6 @@ export default class ComponentView extends Component {
               </Panel.Collapse>
             </Panel>
           </Row>
-        </Grid>
-      </Row>
       <EssentialModal show={this.showModal} comp={this.modalComp} hide={this.clearModal} />
       </React.Fragment>
       );

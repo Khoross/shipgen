@@ -14,6 +14,7 @@ import jssVendor from 'jss-vendor-prefixer';
 import {ShipStore} from '~/model/ShipStore';
 import ShipHeader from '~/components/ShipHeader';
 import ComponentView from '~/components/ComponentView';
+import WeaponsView from '~/components/WeaponsView';
 import ExtrasView from '~/components/ExtrasView';
 
 // firebase.initializeApp({
@@ -49,6 +50,7 @@ class App extends Component {
             <React.Fragment>
               <ShipHeader/>
               <ComponentView />
+              <WeaponsView />
               <ExtrasView />
             </React.Fragment>
           </Provider>

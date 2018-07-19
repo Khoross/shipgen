@@ -9,7 +9,7 @@ import ExtrasModal from './Essential/ExtrasModal'
 @observer
 export default class ComponentView extends Component {
   @observable showModal = false;
-  @observable modalComp = undefined;
+  @observable modalIdx = undefined;
   @observable show = true;
 
   @action displayModal = (idx) => {
@@ -24,8 +24,6 @@ export default class ComponentView extends Component {
   render() {
     return (
       <React.Fragment>
-      <Row>
-        <Grid fluid={true}>
           <Row>
             <Panel bsStyle="info" expanded={this.show} onToggle>
               <Panel.Heading onClick={()=> this.show = !this.show}>
@@ -43,8 +41,6 @@ export default class ComponentView extends Component {
               </Panel.Collapse>
             </Panel>
           </Row>
-        </Grid>
-      </Row>
       <ExtrasModal show={this.showModal} idx={this.modalIdx} hide={this.clearModal} />
       </React.Fragment>
       );
