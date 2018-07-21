@@ -7,7 +7,7 @@ import ExtrasModal from './Essential/ExtrasModal'
 
 @inject('shipStore')
 @observer
-export default class ComponentView extends Component {
+export default class ExtrasView extends Component {
   @observable showModal = false;
   @observable modalIdx = undefined;
   @observable show = true;

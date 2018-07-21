@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
 import {ListGroupItem, Col, Row} from 'react-bootstrap';
-import extrasList from '~/static/extras.json';
+import weaponsList from '~/static/weapons.json';
 
 
 @inject('shipStore')
 @observer
-export default class ExtrasSelector extends Component {
+export default class WeaponSelector extends Component {
   render() {
     if(this.props.idx === undefined){
       return(
           <ListGroupItem onClick={this.props.onClick}>
-              <Col xs={3} ><Row><h2>Remove component</h2></Row></Col>
+              <Col xs={3} ><Row><h2>Remove weapon</h2></Row></Col>
           </ListGroupItem>
         )
     }
-    const item = extrasList[this.props.idx]
+    const item = weaponsList[this.props.idx]
     return (
       <ListGroupItem
         onClick={this.props.onClick}
-        active={this.props.shipStore.extrasInternal[this.props.slot] !== undefined && this.props.shipStore.extrasInternal[this.props.slot].idx === this.props.idx}>
+        active={this.props.shipStore[this.props.slot][`${this.props.ownIdx}Internal`] !== undefined && this.props.shipStore[this.props.slot][`${this.props.ownIdx}Internal`].idx === this.props.idx}>
           <Col xs={3} ><Row><h2>{item.name}</h2></Row></Col>
           <Col xs={9} >
             <Row>

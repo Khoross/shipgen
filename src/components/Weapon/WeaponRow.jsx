@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {observer} from'mobx-react';
 import {ListGroupItem, Grid, Col, Row} from 'react-bootstrap';
 import injectSheet from 'react-jss';
 
@@ -10,6 +11,7 @@ const styles = {
 }
 
 @injectSheet(styles)
+@observer
 export default class WeaponRow extends Component {
   render() {
     const classes = this.props.classes

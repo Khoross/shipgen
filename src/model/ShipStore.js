@@ -256,15 +256,15 @@ export class ShipStore {
             dorsal: [],
             keel: [],
             port: [],
-            star: []
+            starboard: []
         }
         }
         return {
-            prow: this.hullClass.prow,
-            dorsal: this.hullClass.dorsal,
-            keel: this.hullClass.keel,
-            port: this.hullClass.side,
-            star: this.hullClass.side
+            prow: this.hullClass.prow.concat([undefined]),
+            dorsal: this.hullClass.dorsal.concat([undefined]),
+            keel: this.hullClass.keel.concat([undefined]),
+            port: this.hullClass.side.concat([undefined]),
+            starboard: this.hullClass.side.concat([undefined])
         }
     }
 

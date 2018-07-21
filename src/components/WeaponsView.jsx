@@ -4,6 +4,7 @@ import {observer, inject, Provider} from 'mobx-react';
 import {observable, action} from 'mobx';
 import {Grid, Row, Panel} from 'react-bootstrap';
 import WeaponList from './Weapon/WeaponList';
+import WeaponModal from './Weapon/WeaponModal';
 
 @inject('shipStore')
 @observer
@@ -29,11 +30,11 @@ class WeaponsView extends Component {
         <Row>
           <Panel bsStyle="info" expanded={this.show} onToggle>
             <Panel.Heading onClick={()=> this.show = !this.show}>
-              <Panel.Title>
-                <Grid>
+              <Grid>
+                <Panel.Title>
                   <Row>Weapons</Row>
-                </Grid>
-              </Panel.Title>
+                </Panel.Title>
+              </Grid>
             </Panel.Heading>
             <Panel.Collapse>
               {['prow', 'dorsal', 'port', 'starboard', 'keel'].map(e=>
@@ -41,7 +42,7 @@ class WeaponsView extends Component {
             </Panel.Collapse>
           </Panel>
         </Row>
-        
+        <WeaponModal show={this.showModal} hide={this.clearModal} idx={this.modalIdx} slot={this.modalSlot}/>
       </React.Fragment>
     );
   }
