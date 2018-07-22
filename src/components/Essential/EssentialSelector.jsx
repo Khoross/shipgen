@@ -30,7 +30,7 @@ export default class EssentialSelector extends Component {
       <ListGroupItem
         onClick={this.props.onClick}
         active={this.props.shipStore[`${this.props.comp}Internal`].idx === this.props.idx}>
-          <Col xs={3} ><Row><h2>{item.name}</h2></Row></Col>
+          <Col xs={3} ><Row>{item.name}</Row></Col>
           <Col xs={9} >
             <Row>
               <Col xs={4}><Row>Power: <b>{item.power < 0 ? `${-item.power} Generated` : item.power}</b></Row></Col>

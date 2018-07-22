@@ -8,30 +8,19 @@ import {JssProvider} from 'react-jss'
 import jssNested from 'jss-nested';
 import jssCamel from 'jss-camel-case';
 import jssVendor from 'jss-vendor-prefixer';
-// import firebase from 'firebase';
-// import 'firebase/firestore';
-// import {initFirestorter, Collection, Document} from 'firestorter';
+import {Router, Route} from 'react-router-dom'
+import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
 import {ShipStore} from '~/model/ShipStore';
 import ShipHeader from '~/components/ShipHeader';
-import ComponentView from '~/components/ComponentView';
-import WeaponsView from '~/components/WeaponsView';
-import ExtrasView from '~/components/ExtrasView';
+import ShipPage from '~/pages/ShipPage';
+import LoadPage from '~/pages/LoadPage';
+import NavBar from '~/pages/NavBar';
 
-// firebase.initializeApp({
-//   apiKey: 'AIzaSyDAqEMurbKpQT8Bz7mZuVmncWiG-0G4-o4',
-//   authDomain: 'rtshipdesigner.firebaseapp.com',
-//   projectId: 'rtshipdesigner'
-// });
 
-// initFirestorter({firebase: firebase});
-
-// async function save(store) {
-//   const designs = new Collection('shipdesigns');
-//   const doc = await designs.add(
-//     store.serialize
-//   )
-// }
-
+const browserHistory = createBrowserHistory();
+const routingStore = new RouterStore();
+const history = syncHistoryWithStore(browserHistory, routingStore);
 
 const jss = createJss()
 jss.use(jssNested())
@@ -44,18 +33,20 @@ window.store = Ship;
 class App extends Component {
   render() {
     return (
-      <div className="container-fluid">
-        <JssProvider jss={jss}>
-          <Provider shipStore={Ship}>
-            <React.Fragment>
-              <ShipHeader/>
-              <ComponentView />
-              <WeaponsView />
-              <ExtrasView />
-            </React.Fragment>
-          </Provider>
-        </JssProvider>
-      </div>
+      <Provider shipStore={Ship} routingStore={routingStore}>
+        <Router history={history}>
+          <div className="container-fluid">
+            <JssProvider jss={jss}>
+              <React.Fragment>
+                <ShipHeader/>
+                <NavBar />
+                <Route path="/io" component={LoadPage} />
+                <Route path="/" exact component={ShipPage} />
+              </React.Fragment>
+            </JssProvider>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }

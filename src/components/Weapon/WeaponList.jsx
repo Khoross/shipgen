@@ -30,7 +30,11 @@ class WeaponList extends Component {
           {
           this.props.shipStore[this.props.slot].map((e, i)=>{
             return(
-              <WeaponRow item={e} onClick={()=>this.props.onClick(i)} />
+              <WeaponRow
+                item={e}
+                key={i}
+                onClick={()=>this.props.onClick(i)}
+                qualityAccessor={(store)=>store[`${this.props.slot}Internal`][i].quality} />
             )
           })
           }

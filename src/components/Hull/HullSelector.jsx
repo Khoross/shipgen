@@ -23,7 +23,7 @@ export default class HullSelector extends Component {
       <ListGroupItem
         onClick={()=>this.props.hullViewStore.setSelected(this.props.hullIdx, this.props.classIdx)}
         active={this.props.hullViewStore.selectedArr[this.props.classIdx][this.props.hullIdx]}>
-          <Col xs={3} ><Row><h2>{hull.name}</h2></Row></Col>
+          <Col xs={3} ><Row>{hull.name}</Row></Col>
           <Col xs={9} >
             <Row>
               <Col xs={4}><Row>Speed: <b>{hull.speed}</b></Row></Col>

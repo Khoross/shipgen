@@ -37,9 +37,15 @@ export default class WeaponModal extends Component {
             {
               this.props.shipStore.weapIdxLists[this.props.slot].map(e => {
                 return(
-                  <WeaponSelector key={e!==undefined?e:-1} idx={e} slot={this.props.slot} ownIdx={this.props.idx} onClick={()=>{
-                    this.props.hide()
-                    this.props.shipStore[`${this.props.slot}Internal`][this.props.idx] = e === undefined ? {} : {idx: e, quality: {name: 'Common'}}
+                  <WeaponSelector
+                    key={e!==undefined?e:-1}
+                    idx={e}
+                    slot={this.props.slot}
+                    ownIdx={this.props.idx}
+                    onClick={()=>{
+                      this.props.hide()
+                      this.props.shipStore[`${this.props.slot}Internal`][this.props.idx] =
+                      e === undefined ? {} : {idx: e, quality: {idx: 1, choiceIdx: []}}
                   }}/>
                 )
               })

@@ -12,6 +12,7 @@
     "jss-vendor-prefixer": "^8.0.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
+    "mobx-react-router": "^4.0.4",
     "mobx-utils": "^5.0.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
@@ -19,6 +20,8 @@
     "react-dom": "^16.4.1",
     "react-jss": "^8.6.1",
     "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4"
   },
   "scripts": {

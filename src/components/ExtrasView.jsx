@@ -36,7 +36,11 @@ export default class ExtrasView extends Component {
               <Panel.Collapse>
                 <ListGroup bsClass='list-group-flush'>
                   {this.props.shipStore.extras.map((_,idx)=>
-                    <EssentialRow accessor={e=>e.extras[idx]} key={this.props.shipStore.getKeyList('extrasInternal')[idx]} onClick={()=>this.displayModal(idx)} />)}
+                    <EssentialRow
+                      accessor={e=>e.extras[idx]}
+                      qualityAccessor={store=>store.extrasInternal[idx].quality}
+                      key={this.props.shipStore.getKeyList('extrasInternal')[idx]}
+                      onClick={()=>this.displayModal(idx)} />)}
                 </ListGroup>
               </Panel.Collapse>
             </Panel>

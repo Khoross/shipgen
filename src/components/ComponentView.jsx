@@ -4,7 +4,15 @@ import {observable, action} from 'mobx';
 import {Grid, ListGroup, ListGroupItem, Row, Panel} from 'react-bootstrap';
 import EssentialRow from './Essential/EssentialRow'
 import EssentialModal from './Essential/EssentialModal'
+import injectSheet from 'react-jss';
 
+const styles = {
+  noPad: {
+    marginTop: "-20px"
+  }
+}
+
+@injectSheet(styles)
 @inject('shipStore')
 @observer
 export default class ComponentView extends Component {
@@ -25,7 +33,7 @@ export default class ComponentView extends Component {
   render() {
     return (
       <React.Fragment>
-          <Row>
+          <Row className={this.props.classes.noPad}>
             <Panel bsStyle="info" expanded={this.show} onToggle>
               <Panel.Heading onClick={()=>this.show = !this.show}>
                 <Panel.Title>
@@ -37,7 +45,12 @@ export default class ComponentView extends Component {
               <Panel.Collapse>
                 <ListGroup bsClass='list-group-flush'>
                   {['plasma', 'shields', 'bridge', 'crew', 'life', 'augur', 'gellar', 'warp'].map(
-                    comp => <EssentialRow accessor={e=>e[comp]} comp={comp} key={comp} onClick={()=>this.displayModal(comp)} />)}
+                    comp => <EssentialRow
+                      accessor={e=>e[comp]}
+                      qualityAccessor={(store)=>store[`${comp}Internal`].quality}
+                      comp={comp}
+                      key={comp}
+                      onClick={()=>this.displayModal(comp)} />)}
                 </ListGroup>
               </Panel.Collapse>
             </Panel>

@@ -33,12 +33,15 @@ export default class ExtrasModal extends Component {
             <ListGroup>
             {
               this.props.shipStore.extrasIdxList.map(e => {
-                console.log(e)
                 return(
-                  <ExtrasSelector key={e!==undefined?e:-1} idx={e} slot={this.props.idx} onClick={()=>{
-                    this.props.hide()
-                    this.props.shipStore.changeExtras(e, {name: 'Common'}, this.props.idx)
-                  }}/>
+                  <ExtrasSelector
+                    key={e!==undefined?e:-1}
+                    idx={e}
+                    slot={this.props.idx}
+                    onClick={()=>{
+                      this.props.hide()
+                      this.props.shipStore.changeExtras(e, {idx: 1, choiceIdx: []}, this.props.idx)
+                    }}/>
                 )
               })
             }

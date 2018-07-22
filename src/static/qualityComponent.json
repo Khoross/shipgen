@@ -1,6 +1,6 @@
 [
-    {"name": "Poor", "fixed": {"space": 1, "power": 1, "powergen": 1, "cost": -1}},
-    {"name": "Common", "fixed": {}},
+    {"name": "Poor", "fixed": {"space": 1, "power": 1, "powergen": 1, "cost": -1}, "choices": 0},
+    {"name": "Common", "fixed": {}, "choices": 0},
     {
         "name": "Good",
         "fixed": {"cost": 1},
@@ -10,5 +10,5 @@
         ],
         "choices": 1
     },
-    {"name": "Best", "fixed": {"space": -1, "power": -1, "cost": 2}}
+    {"name": "Best", "fixed": {"space": -1, "power": -1, "cost": 2}, "choices": 0}
 ]

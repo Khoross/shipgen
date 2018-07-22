@@ -9,7 +9,7 @@ import {Row, Col} from 'react-bootstrap';
 
 const styles = {
   header: {
-    position: 'sticky',
+    position: 'sticky'
   },
   nohull: {
   },
@@ -17,7 +17,8 @@ const styles = {
     border: 'none',
     outline: 'none',
     boxShadow: 'none',
-    fontSize: '36px'
+    fontSize: '36px',
+    marginTop: '20px'
   }
 }
 
@@ -65,10 +66,8 @@ export default class ShipHeader extends Component {
             [this.props.classes.nohull]: store.hull === undefined,
           })}
           onClick={(e)=>{
-            if(e.target !== this.nameBox) {
-              hullViewStore.resetState(store.hullIdx, store.hullClassIdx)
-              hullViewStore.setVisible(true)
-            }
+            hullViewStore.resetState(store.hullIdx, store.hullClassIdx)
+            hullViewStore.setVisible(true)
           }}
         >
           <div className="container">
@@ -76,9 +75,13 @@ export default class ShipHeader extends Component {
               <input
                 className={classNames("form-control", this.props.classes.nameInput)}
                 value={store.name}
-                onChange={(e)=>store.name = e.target.value}
+                onClick={(e)=>{
+                  e.stopPropagation();
+                }}
+                onChange={(e)=>{
+                  store.name = e.target.value;
+                }}
                 placeholder={"The Unnamed"}
-                ref={(elem)=>this.nameBox = elem}
               />
               <h1>{store.hullName}</h1>
             </div>
@@ -101,8 +104,8 @@ export default class ShipHeader extends Component {
                 <Col xs={4}><Row>Total Cost: <b>{`${store.pointsUsed}`}</b></Row></Col>
               </Row>
               <Row>
-                <Col xs={8}><Row>Xenotech Components: <b>{store.hull.xenosCount}</b></Row></Col>
-                <Col xs={4}><Row>Archaeotech Components: <b>{store.hull.archaeoCount}</b></Row></Col>
+                <Col xs={8}><Row>Xenotech Components: <b>{store.xenosCount}</b></Row></Col>
+                <Col xs={4}><Row>Archaeotech Components: <b>{store.archaeoCount}</b></Row></Col>
               </Row>
             </div>
             }

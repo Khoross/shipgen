@@ -35,10 +35,15 @@ export default class EssentialModal extends Component {
             {
               this.props.comp !== undefined && this.props.shipStore.compIdxLists[this.props.comp].map(e => {
                 return(
-                  <EssentialSelector key={e} idx={e} comp={this.props.comp} onClick={()=>{
-                    this.props.hide()
-                    this.props.shipStore[`${this.props.comp}Internal`] = {idx: e, quality: {name: 'Common'}}
-                  }}/>
+                  <EssentialSelector
+                    key={e}
+                    idx={e}
+                    comp={this.props.comp}
+                    onClick={()=>{
+                      this.props.hide()
+                      this.props.shipStore[`${this.props.comp}Internal`] =
+                        {idx: e, quality: {idx: 1, choiceIdx: []}}
+                    }}/>
                 )
               })
             }

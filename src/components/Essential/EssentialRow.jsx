@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
 import {ListGroupItem, Grid, Col, Row} from 'react-bootstrap';
+import DisplayQuality from '~/components/DisplayQuality'
 import injectSheet from 'react-jss';
 
 const styles = {
@@ -31,7 +32,7 @@ export default class EssentialRow extends Component {
             </Row> :
             <Row>
               <Col xs={3}>
-                <div className={classes.comp}>{item.name}</div>
+                <DisplayQuality item={item} qualityAccessor={this.props.qualityAccessor} qualType="comp"/>
                 <div className={classes.title}>{this.props.comp}</div>
               </Col>
               <Col xs={9} >

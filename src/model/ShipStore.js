@@ -11,6 +11,14 @@ import plasmaList from '~/static/plasma.json';
 import shieldsList from '~/static/shields.json';
 import warpList from '~/static/warp.json';
 import weaponsList from '~/static/weapons.json';
+import compQuality from '~/static/qualityComponent.json';
+import weapQuality from '~/static/qualityWeapon.json';
+import backgroundList from '~/static/background.json';
+
+const qualObj = {
+    comp: compQuality,
+    weap: weapQuality
+}
 
 function undefAdd(accessor = d=>d, ...objs){
     return objs.reduce(
@@ -70,15 +78,23 @@ export class ShipStore {
     @observable portInternal = [];
     @observable starboardInternal = [];
 
+    @observable backgroundIdx = 0;
+
+    @observable id = undefined;
+
     /**
      * Generate a new component with quality modifiers applied
      * @param  {object} component Original component
      * @param  {object} quality   quality object - should have a cost and a number of other keys
      * @return {object}           New component with stats updated
      */
-    applyQuality(component, quality) {
-        let qualCopy = Object.assign({}, quality);
-        delete qualCopy.name;
+    applyQuality(component, quality, qualType) {
+        let qualCopy = quality === undefined ? {name: 'Common'} :
+            Object.assign({name: qualObj[qualType][quality.idx].name},
+                qualObj[qualType][quality.idx].fixed,
+                ...quality.choiceIdx
+                    .filter(e=>e!=undefined)
+                    .map(e=>qualObj[qualType][quality.idx].bonusOptions[e].mod));
         if("powergen" in qualCopy) {
             if(component.power < 0) {
                 qualCopy.power = qualCopy.power + qualCopy.powergen
@@ -93,7 +109,9 @@ export class ShipStore {
              * other things can go from negative to positive
              * if property is 0, space and power cannot decrease
              */
-            if(compCopy[key] > 0 && (key === 'power' || key === 'space' || key === 'cost')) {
+            if(key === "name") {
+                compCopy.quality = qualCopy[key]
+            } else if(compCopy[key] > 0 && (key === 'power' || key === 'space' || key === 'cost')) {
                 compCopy[key] = Math.max(1, compCopy[key] + qualCopy[key])
             } else if(key === 'power' && compCopy[key] < 0) {
                 compCopy[key] = Math.min(-1, compCopy[key] + qualCopy[key])
@@ -103,6 +121,11 @@ export class ShipStore {
                 compCopy[key] += qualCopy[key]
             }
         }
+        if('damMod' in compCopy && 'damDice' in compCopy) {
+            compCopy.dam=`${compCopy.damDice}${compCopy.damMod<0?'':'+'}${compCopy.damMod!==0?compCopy.damMod:''}`
+            delete compCopy.damDice
+            delete compCopy.damMod
+        }
         return compCopy
     }
 
@@ -111,6 +134,10 @@ export class ShipStore {
     }
     @computed get hullClass() {
         return this.hullClassIdx !== undefined ? hullList[this.hullClassIdx] : undefined;
+    }
+
+    @computed get background() {
+        return backgroundList[this.backgroundIdx]
     }
 
     // getComp = createTransformer(name=>{
@@ -125,90 +152,90 @@ export class ShipStore {
         if(this.augurInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(augurList[this.augurInternal.idx], this.augurInternal.quality)
+        return this.applyQuality(augurList[this.augurInternal.idx], this.augurInternal.quality, 'comp')
     }
     @computed get bridge() {
         if(this.bridgeInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(bridgeList[this.bridgeInternal.idx], this.bridgeInternal.quality)
+        return this.applyQuality(bridgeList[this.bridgeInternal.idx], this.bridgeInternal.quality, 'comp')
     }
     @computed get crew() {
         if(this.crewInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(crewList[this.crewInternal.idx], this.crewInternal.quality)
+        return this.applyQuality(crewList[this.crewInternal.idx], this.crewInternal.quality, 'comp')
     }
     @computed get gellar() {
         if(this.gellarInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(gellarList[this.gellarInternal.idx], this.gellarInternal.quality)
+        return this.applyQuality(gellarList[this.gellarInternal.idx], this.gellarInternal.quality, 'comp')
     }
     @computed get life() {
         if(this.lifeInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(lifeList[this.lifeInternal.idx], this.lifeInternal.quality)
+        return this.applyQuality(lifeList[this.lifeInternal.idx], this.lifeInternal.quality, 'comp')
     }
     @computed get plasma() {
         if(this.plasmaInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(plasmaList[this.plasmaInternal.idx], this.plasmaInternal.quality)
+        return this.applyQuality(plasmaList[this.plasmaInternal.idx], this.plasmaInternal.quality, 'comp')
     }
     @computed get shields() {
         if(this.shieldsInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(shieldsList[this.shieldsInternal.idx], this.shieldsInternal.quality)
+        return this.applyQuality(shieldsList[this.shieldsInternal.idx], this.shieldsInternal.quality, 'comp')
     }
     @computed get warp() {
         if(this.warpInternal.idx === undefined) {
             return undefined
         }
-        return this.applyQuality(warpList[this.warpInternal.idx], this.warpInternal.quality)
+        return this.applyQuality(warpList[this.warpInternal.idx], this.warpInternal.quality, 'comp')
     }
     @computed get extras() {
         return this.extrasInternal.map(
             e=>e.idx === undefined ?
                 undefined :
-                this.applyQuality(extrasList[e.idx], e.quality)
+                this.applyQuality(extrasList[e.idx], e.quality, 'comp')
         );
     }
     @computed get prow() {
         return this.prowInternal.map(
             e=>e.idx === undefined ?
                 undefined :
-                this.applyQuality(weaponsList[e.idx], e.quality)
+                this.applyQuality(weaponsList[e.idx], e.quality, 'weap')
             );
     }
     @computed get dorsal() {
         return this.dorsalInternal.map(
             e=>e.idx === undefined ?
                 undefined :
-                this.applyQuality(weaponsList[e.idx], e.quality)
+                this.applyQuality(weaponsList[e.idx], e.quality, 'weap')
             );
     }
     @computed get keel() {
         return this.keelInternal.map(
             e=>e.idx === undefined ?
                 undefined :
-                this.applyQuality(weaponsList[e.idx], e.quality)
+                this.applyQuality(weaponsList[e.idx], e.quality, 'weap')
             );
     }
     @computed get port() {
         return this.portInternal.map(
             e=>e.idx === undefined ?
                 undefined :
-                this.applyQuality(weaponsList[e.idx], e.quality)
+                this.applyQuality(weaponsList[e.idx], e.quality, 'weap')
             );
     }
     @computed get starboard() {
         return this.starboardInternal.map(
             e=>e.idx === undefined ?
                 undefined :
-                this.applyQuality(weaponsList[e.idx], e.quality)
+                this.applyQuality(weaponsList[e.idx], e.quality, 'weap')
             );
     }
 
@@ -310,7 +337,7 @@ export class ShipStore {
     }
 
     @computed get pointsUsed() {
-        return undefAdd(d=>d.cost, this.hull, ...this.generateComponentList())
+        return undefAdd(d=>d.cost, this.hull, ...this.generateComponentList(), this.background)
     }
 
     @computed get powerGenerated() {
@@ -398,7 +425,9 @@ export class ShipStore {
             dorsalInternal: this.dorsalInternal.map(e=>deepRectify(e)),
             keelInternal: this.keelInternal.map(e=>deepRectify(e)),
             portInternal: this.portInternal.map(e=>deepRectify(e)),
-            starboardInternal: this.starboardInternal.map(e=>deepRectify(e))
+            starboardInternal: this.starboardInternal.map(e=>deepRectify(e)),
+            backgroundIdx: this.backgroundIdx,
+            id: this.id
         }
     }
 
@@ -420,5 +449,7 @@ export class ShipStore {
         this.keelInternal = payload.keelInternal.map(e=>deepUnrectify(e));
         this.portInternal = payload.portInternal.map(e=>deepUnrectify(e));
         this.starboardInternal = payload.starboardInternal.map(e=>deepUnrectify(e));
+        this.id = payload.id;
+        this.backgroundIdx = payload.backgroundIdx;
     }
 }
