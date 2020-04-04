@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import hullList from '~/static/hulls.json';
-import {observer, inject, Provider} from 'mobx-react';
-import {observable, action} from 'mobx';
-import {Modal, Button, Panel, ListGroup, ListGroupItem, Glyphicon, Col, Row} from 'react-bootstrap';
+import {observer, inject} from 'mobx-react';
+import Modal from 'react-bootstrap/lib/Modal';
+import Button from 'react-bootstrap/lib/Button';
 import HullClassSelector from './Hull/HullClassSelector'
 import HullAcceptUpdate from './Hull/HullAcceptUpdate'
 

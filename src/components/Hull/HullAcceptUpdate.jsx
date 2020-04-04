@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import hullList from '~/static/hulls.json';
-import {observer, inject, Provider} from 'mobx-react';
-import {observable, action} from 'mobx';
-import {Button} from 'react-bootstrap';
+import {observer, inject} from 'mobx-react';
+import Button from 'react-bootstrap/lib/Button';
 
 @inject('hullViewStore')
 @inject('shipStore')

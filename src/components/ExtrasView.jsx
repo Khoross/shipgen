@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import {observer, inject, Provider} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {observable, action} from 'mobx';
-import {Grid, ListGroup, ListGroupItem, Row, Panel} from 'react-bootstrap';
+import Grid from 'react-bootstrap/lib/Grid';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import Row from 'react-bootstrap/lib/Row';
+import Panel from 'react-bootstrap/lib/Panel';
 import EssentialRow from './Essential/EssentialRow'
 import ExtrasModal from './Essential/ExtrasModal'
 

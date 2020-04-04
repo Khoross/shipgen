@@ -27,9 +27,12 @@ export default class DisplayQuality extends Component {
         <div className={classes.comp}>
           <select
             value={qualStore.idx}
-            onClick={(e)=>{e.stopPropagation()}}
+            onClick={(e)=>{
+              e.stopPropagation();
+              e.nativeEvent.stopImmediatePropagation()
+            }}
             onChange={action((e)=>{
-              qualStore.idx = parseInt(e.target.value)
+              qualStore.idx = parseInt(e.target.value, 10)
               qualStore.choiceIdx = Array(quality[e.target.value].choices).fill(undefined)
             })}>
             {quality.map(
@@ -51,7 +54,7 @@ export default class DisplayQuality extends Component {
                     value={val}
                     key={idx}
                     onClick={(e)=>{e.stopPropagation()}}
-                    onChange={(e)=>qualStore.choiceIdx[idx] = parseInt(e.target.value)}
+                    onChange={(e)=>qualStore.choiceIdx[idx] = parseInt(e.target.value, 10)}
                   >
                     <option style={{display: 'none'}} />
                     {quality[qualStore.idx].bonusOptions.map((opt, optIdx)=>

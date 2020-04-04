@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import hullList from '~/static/hulls.json';
-import {observer, inject, Provider} from 'mobx-react';
-import {observable, action} from 'mobx';
-import {Panel, ListGroup, Glyphicon} from 'react-bootstrap';
+import {observer, inject} from 'mobx-react';
+import Panel from 'react-bootstrap/lib/Panel';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import HullSelector from './HullSelector'
 
 @inject('hullViewStore')

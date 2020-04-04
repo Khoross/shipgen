@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {observer} from'mobx-react';
-import {ListGroupItem, Grid, Col, Row} from 'react-bootstrap';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import Grid from 'react-bootstrap/lib/Grid';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import injectSheet from 'react-jss';
 import WeaponDisplay from './WeaponDisplay';
 
@@ -17,7 +20,8 @@ export default class WeaponRow extends Component {
   render() {
     const classes = this.props.classes
     return (
-      <ListGroupItem
+      <div
+        className='list-group-item'
         onClick={this.props.onClick}
         >
         <Grid>
@@ -30,7 +34,7 @@ export default class WeaponRow extends Component {
             <WeaponDisplay item={this.props.item} qualityAccessor={this.props.qualityAccessor} />
           }
         </Grid>
-      </ListGroupItem>
+      </div>
     );
   }
 }

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import {ListGroupItem, Grid, Col, Row} from 'react-bootstrap';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import Grid from 'react-bootstrap/lib/Grid';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 import DisplayQuality from '~/components/DisplayQuality'
 import injectSheet from 'react-jss';
 
@@ -8,18 +11,32 @@ const styles = {
   title: {
     textTransform: "capitalize",
     textAlign: "right"
+  },
+  compRow: {
+    backgroundColor: (props)=>{
+      const item = props.accessor(props.shipStore)
+      if(item===undefined){
+        return 'transparent'
+      }
+      return item.origin === "Archaeo" ?
+        "powderblue" :
+      item.origin === "Xeno" ?
+        "lightcoral" :
+        "transparent"
+    }
   }
 }
 
-@injectSheet(styles)
 @inject('shipStore')
+@injectSheet(styles)
 @observer
 export default class EssentialRow extends Component {
   render() {
     const item = this.props.accessor(this.props.shipStore)
     const classes = this.props.classes
     return (
-      <ListGroupItem
+      <div
+        className='list-group-item'
         onClick={this.props.onClick}
         >
         <Grid>
@@ -30,7 +47,7 @@ export default class EssentialRow extends Component {
                 <div className={classes.title}>{this.props.comp}</div>
               </Col>
             </Row> :
-            <Row>
+            <Row className={classes.compRow}>
               <Col xs={3}>
                 <DisplayQuality item={item} qualityAccessor={this.props.qualityAccessor} qualType="comp"/>
                 <div className={classes.title}>{this.props.comp}</div>
@@ -54,7 +71,7 @@ export default class EssentialRow extends Component {
             </Row>
           }
         </Grid>
-      </ListGroupItem>
+      </div>
     );
   }
 }

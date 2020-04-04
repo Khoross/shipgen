@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import {observable, action} from 'mobx';
-import {Grid, Row, Col, Panel} from 'react-bootstrap';
+import {observable} from 'mobx';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import Panel from 'react-bootstrap/lib/Panel';
 import injectSheet from 'react-jss';
 import backgroundList from '~/static/background.json';
 
@@ -37,7 +40,7 @@ export default class BackgroundView extends Component {
                   <Col xs={3}>
                     <select
                       value={this.props.shipStore.backgroundIdx}
-                      onChange={(e)=>this.props.shipStore.backgroundIdx = parseInt(e.target.value)}
+                      onChange={(e)=>this.props.shipStore.backgroundIdx = parseInt(e.target.value, 10)}
                       className="form-control"
                     >
                       {backgroundList.map(

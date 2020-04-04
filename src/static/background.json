@@ -1,6 +1,6 @@
 [
     {"name":"No special background", "misc": "-", "cost": 0},
-    {"name":"Thulian Explorator Vessel", "misc": "Frigates, Light Cruisers, Cruisers only. +10 detection, extra stuff when doing exploration objectives, +1 Archaeotech component, -1 Speed, -5 Manoeuverability", "cost": 0},
+    {"name":"Thulian Explorator Vessel", "misc": "Frigates, Light Cruisers, Cruisers only. +10 detection, extra stuff when doing exploration objectives, +1 Archaeotech component, -1 Speed, -5 Manoeuverability", "cost": 1},
     {"name":"Reaver of the Unbeholden Reaches", "misc": "Transports, Raiders, Frigtes only. Long term repairs restore 1d10+5 integrity, +10 to Silent Running, -10 to social tests with anyone who knows what vessel you are from", "cost": 2},
     {"name":"Veteran of the Crusade", "misc": "+10 BS tests with ships weapons, -40 to Silent Running tests, +10 to Charm and Intimidate with anyone who knows what ship you came from", "cost": 3},
     {"name":"Gifted Vessel of the Fleet", "misc": "All ships except Transports. +10 to Command tests onboard the ship, ship's Captain can make a command test to ignore crippling for a round, all crew gain Good Reputation (Imperial Navy)", "cost": 2},

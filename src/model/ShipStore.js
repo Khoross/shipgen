@@ -93,7 +93,7 @@ export class ShipStore {
             Object.assign({name: qualObj[qualType][quality.idx].name},
                 qualObj[qualType][quality.idx].fixed,
                 ...quality.choiceIdx
-                    .filter(e=>e!=undefined)
+                    .filter(e=>e!==undefined)
                     .map(e=>qualObj[qualType][quality.idx].bonusOptions[e].mod));
         if("powergen" in qualCopy) {
             if(component.power < 0) {
@@ -342,12 +342,12 @@ export class ShipStore {
 
     @computed get powerGenerated() {
         return -undefAdd(d=>Math.min(d.power, 0),
-            ...this.generateComponentList())
+            ...this.generateComponentList(), this.hull)
     }
 
     @computed get powerUsed() {
         return undefAdd(d=>Math.max(d.power, 0),
-            ...this.generateComponentList())
+            ...this.generateComponentList(), this.hull)
     }
 
     @computed get xenosCount() {

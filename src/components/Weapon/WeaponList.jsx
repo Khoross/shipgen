@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {observer, inject} from 'mobx-react';
 import injectSheet from 'react-jss';
-import {ListGroup, Panel} from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
 import WeaponRow from './WeaponRow'
 import classNames from 'classnames';
 

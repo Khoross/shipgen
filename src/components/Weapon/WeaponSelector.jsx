@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import {ListGroupItem, Col, Row} from 'react-bootstrap';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import weaponsList from '~/static/weapons.json';
 import WeaponDisplay from './WeaponDisplay';
 

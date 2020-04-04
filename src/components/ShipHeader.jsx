@@ -5,11 +5,11 @@ import {observable, action} from 'mobx';
 import HullList from './HullList';
 import injectSheet from 'react-jss';
 import classNames from 'classnames';
-import {Row, Col} from 'react-bootstrap';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 
 const styles = {
   header: {
-    position: 'sticky'
   },
   nohull: {
   },
@@ -19,6 +19,16 @@ const styles = {
     boxShadow: 'none',
     fontSize: '36px',
     marginTop: '20px'
+  },
+  hullItem: {
+
+  },
+  hullItemVal: {
+    fontWeight: 'bold'
+  },
+  hullItemValOver: {
+    extend: 'hullItemVal',
+    color: 'red'
   }
 }
 
@@ -57,6 +67,7 @@ const hullViewStore = new HullViewStore();
 export default class ShipHeader extends Component {
   render() {
     const store = this.props.shipStore
+    const classes = this.props.classes
     return (
       <React.Fragment>
         <div
@@ -73,7 +84,7 @@ export default class ShipHeader extends Component {
           <div className="container">
             <div className="col">
               <input
-                className={classNames("form-control", this.props.classes.nameInput)}
+                className={classNames("form-control", classes.nameInput)}
                 value={store.name}
                 onClick={(e)=>{
                   e.stopPropagation();
@@ -89,23 +100,100 @@ export default class ShipHeader extends Component {
             store.hull !== undefined &&
             <div className="col">
               <Row>
-                <Col xs={4}><Row>Speed: <b>{store.hull.speed}</b></Row></Col>
-                <Col xs={4}><Row>Manoeuvrability: <b>{store.hull.man}</b></Row></Col>
-                <Col xs={4}><Row>Detection: <b>{store.hull.detection}</b></Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Speed: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.hull.speed}
+                  </span>
+                </Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Manoeuvrability: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.hull.man}
+                  </span>
+                </Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Detection: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.hull.detection}
+                  </span>
+                </Row></Col>
               </Row>
               <Row>
-                <Col xs={4}><Row>Hull Points: <b>{store.hull.hits}</b></Row></Col>
-                <Col xs={4}><Row>Armour: <b>{store.hull.armour}</b></Row></Col>
-                <Col xs={4}><Row>Turret Rating: <b>{store.hull.turret}</b></Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Hull Points: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.hull.hits}
+                  </span>
+                </Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Armour: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.hull.armour}
+                  </span>
+                </Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Turret Rating: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.hull.turret}
+                  </span>
+                </Row></Col>
               </Row>
               <Row>
-                <Col xs={4}><Row>Space: <b>{`${store.spaceUsed}/${store.hull.space}`}</b></Row></Col>
-                <Col xs={4}><Row>Power: <b>{`${store.powerUsed}/${store.powerGenerated}`}</b></Row></Col>
-                <Col xs={4}><Row>Total Cost: <b>{`${store.pointsUsed}`}</b></Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Space: 
+                  </span>
+                  <span className={store.spaceUsed<=store.hull.space?classes.hullItemVal:classes.hullItemValOver}>
+                    {`${store.spaceUsed}/${store.hull.space}`}
+                  </span>
+                </Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Power: 
+                  </span>
+                  <span className={store.powerUsed<=store.powerGenerated?classes.hullItemVal:classes.hullItemValOver}>
+                    {`${store.powerUsed}/${store.powerGenerated}`}
+                  </span>
+                </Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Total Cost: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {`${store.pointsUsed}`}
+                  </span>
+                </Row></Col>
               </Row>
               <Row>
-                <Col xs={8}><Row>Xenotech Components: <b>{store.xenosCount}</b></Row></Col>
-                <Col xs={4}><Row>Archaeotech Components: <b>{store.archaeoCount}</b></Row></Col>
+                <Col xs={8}><Row>
+                  <span className={classes.hullItem}>
+                    Xenotech Components: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.xenosCount}
+                  </span>
+                </Row></Col>
+                <Col xs={4}><Row>
+                  <span className={classes.hullItem}>
+                    Archaeotech Components: 
+                  </span>
+                  <span className={classes.hullItemVal}>
+                    {store.archaeoCount}
+                  </span>
+                </Row></Col>
               </Row>
             </div>
             }

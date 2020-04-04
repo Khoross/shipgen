@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import hullList from '~/static/hulls.json';
-import {observer, inject, Provider} from 'mobx-react';
-import {observable, action} from 'mobx';
-import {ListGroupItem, Col, Row} from 'react-bootstrap';
+import {observer, inject} from 'mobx-react';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 @inject('hullViewStore')
 @observer

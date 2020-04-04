@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Grid, Col, Row, Button} from 'react-bootstrap';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 import injectSheet from 'react-jss';
 import DisplayQuality from '~/components/DisplayQuality';
 
@@ -7,6 +8,15 @@ const styles = {
   title: {
     textTransform: "capitalize",
     textAlign: "right"
+  },
+  compRow: {
+    backgroundColor: (props)=>{
+      return props.item.origin === "Archaeo" ?
+        "powderblue" :
+      props.item.origin === "Xeno" ?
+        "lightcoral" :
+        "transparent"
+    }
   }
 }
 
@@ -16,7 +26,7 @@ export default class WeaponDisplay extends Component {
     const classes = this.props.classes;
     const item = this.props.item;
     return (
-      <Row>
+      <Row className={classes.compRow}>
         <Col xs={3}>
           {this.props.qualityAccessor !== undefined ?
             <DisplayQuality qualityAccessor={this.props.qualityAccessor} item={this.props.item} qualType="weap"/> :

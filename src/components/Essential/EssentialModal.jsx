@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
 import {observable} from 'mobx';
-import {Modal, ListGroup} from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import Modal from 'react-bootstrap/lib/Modal';
 import injectSheet from 'react-jss';
-import classNames from 'classnames';
 import EssentialSelector from './EssentialSelector'
 
 

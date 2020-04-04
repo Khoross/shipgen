@@ -1,9 +1,32 @@
 import React, { Component } from 'react';
 import {observer, inject} from 'mobx-react';
-import {ListGroupItem, Col, Row} from 'react-bootstrap';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 import extrasList from '~/static/extras.json';
+import injectSheet from 'react-jss';
 
+const styles = {
+  title: {
+    textTransform: "capitalize",
+    textAlign: "right"
+  },
+  compRow: {
+    backgroundColor: (props)=>{
+      const item = extrasList[props.idx]
+      if(item === undefined){
+        return 'transparent'
+      }
+      return item.origin === "Archaeo" ?
+        "powderblue" :
+      item.origin === "Xeno" ?
+        "lightcoral" :
+        "transparent"
+    }
+  }
+}
 
+@injectSheet(styles)
 @inject('shipStore')
 @observer
 export default class ExtrasSelector extends Component {
@@ -19,7 +42,8 @@ export default class ExtrasSelector extends Component {
     return (
       <ListGroupItem
         onClick={this.props.onClick}
-        active={this.props.shipStore.extrasInternal[this.props.slot] !== undefined && this.props.shipStore.extrasInternal[this.props.slot].idx === this.props.idx}>
+        active={this.props.shipStore.extrasInternal[this.props.slot] !== undefined && this.props.shipStore.extrasInternal[this.props.slot].idx === this.props.idx}
+        className={this.props.classes.compRow}>
           <Col xs={3} ><Row>{item.name}</Row></Col>
           <Col xs={9} >
             <Row>

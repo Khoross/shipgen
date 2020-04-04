@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {observer, inject, Provider} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {observable, action} from 'mobx';
-import {Grid, Row, Panel} from 'react-bootstrap';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Panel from 'react-bootstrap/lib/Panel';
 import WeaponList from './Weapon/WeaponList';
 import WeaponModal from './Weapon/WeaponModal';
 
