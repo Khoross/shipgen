@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "firebase": "^7.13.2",
-    "node-sass": "^4.9.2",
+    "node-sass": "^7.0.0",
     "react-app-rewire-build-dev": "^1.0.1",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewire-scss": "^1.0.2",
